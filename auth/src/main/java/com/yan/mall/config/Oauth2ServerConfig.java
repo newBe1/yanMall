@@ -94,7 +94,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     /**
-     * 自定义token 生成规则 通过证书中的密钥生成
+     * 自定义token 生成规则 通过私钥加密token
      * @return
      */
     @Bean
@@ -104,9 +104,12 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         return jwtAccessTokenConverter;
     }
 
+    /**
+     * 通过密码 读取jwt.jks中的公钥密钥 并注入 客户端可通过此方法获取公钥密钥
+     * @return
+     */
     @Bean
     public KeyPair keyPair(){
-        //从classpath 下的证书中获取密钥对
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
         return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
     }

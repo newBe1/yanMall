@@ -34,6 +34,12 @@ public class UserServiceImpl implements UserDetailsService {
     @Resource
     private HttpServletRequest request;
 
+    /**
+     * security 通过输入的用户名 去数据库查询用户详情信息
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String clientId = request.getParameter("client_id");

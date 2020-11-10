@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:获取RSA公钥接口
+ * Description:客户端获取RSA公钥接口
  * User: Ryan
  * Date: 2020-11-09
  * Time: 15:16
