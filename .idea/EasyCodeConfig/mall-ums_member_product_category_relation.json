@@ -1,0 +1,31 @@
+{
+  "name" : "UmsMemberProductCategoryRelation",
+  "comment" : "会员与产品分类关系表（用户喜欢的分类）",
+  "fullColumn" : [ {
+    "name" : "id",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "memberId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "productCategoryId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "com.yan.mall.mapper",
+  "savePath" : "./mbg/src/main/java/com/yan/mall/mapper",
+  "saveModelName" : "mbg"
+}

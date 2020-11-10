@@ -1,0 +1,13 @@
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\api\ResultCode.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\constant\AuthConstant.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\domain\SwaggerProperties.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\api\IErrorCode.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\api\CommonResult.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\api\CommonPage.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\service\impl\RedisServiceImpl.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\exception\ApiException.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\config\BaseSwaggerConfig.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\exception\Asserts.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\service\RedisService.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\config\BaseRedisConfig.java
+E:\workfile\code\yanMall\common\src\main\java\com\yan\mall\common\exception\GlobalExceptionHandler.java
