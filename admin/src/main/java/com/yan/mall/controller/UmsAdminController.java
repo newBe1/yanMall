@@ -38,15 +38,20 @@ public class UmsAdminController {
 
     @ApiOperation("根据用户名获取用户详情信息")
     @RequestMapping(value = "loadByUsername",method = RequestMethod.GET)
-    public CommonResult loadUserByUsername(@RequestParam String username){
+    public UserDto loadUserByUsername(@RequestParam String username){
         UserDto userDto = umsAdminService.loadUserByUsername(username);
-        return CommonResult.success(userDto);
+        return userDto;
     }
 
     @ApiOperation("获取公钥")
     @RequestMapping(value = "getPubKey",method = RequestMethod.GET)
     public Map<String, Object> getPubKey(){
         return umsAdminService.getPubKey();
+    }
+
+    @GetMapping("test")
+    public String test(){
+        return "cehgng";
     }
 
 }

@@ -53,7 +53,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             List<UmsRole> roleList = getRoleList(umsAdmin.getId());
             UserDto userDto = new UserDto();
             BeanUtils.copyProperties(umsAdmin, userDto);
-            if (CollUtil.isEmpty(roleList)) {
+            if(CollUtil.isNotEmpty(roleList)){
                 List<String> roleStrList = roleList.stream().map(item -> item.getId() + "_" + item.getName()).collect(Collectors.toList());
                 userDto.setRoles(roleStrList);
             }

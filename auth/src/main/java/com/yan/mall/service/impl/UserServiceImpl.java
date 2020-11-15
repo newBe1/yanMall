@@ -1,6 +1,5 @@
 package com.yan.mall.service.impl;
 
-import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.constant.MessageConstant;
 import com.yan.mall.domain.SecurityUser;
 import com.yan.mall.common.domain.UserDto;

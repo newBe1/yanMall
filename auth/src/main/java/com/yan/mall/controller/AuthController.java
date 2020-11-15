@@ -3,6 +3,7 @@ package com.yan.mall.controller;
 import com.yan.mall.common.api.CommonResult;
 import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.domain.Oauth2TokenDto;
+import com.yan.mall.service.UmsAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,6 +15,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import java.security.Principal;
 import java.util.Map;
 
@@ -31,6 +33,9 @@ public class AuthController {
     @Autowired
     private TokenEndpoint tokenEndpoint;
 
+    @Resource
+    private UmsAdminService umsAdminService;
+
     @ApiOperation("Oauth2获取token")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "grant_type", value = "授权模式", required = true),
@@ -42,7 +47,9 @@ public class AuthController {
     })
     @RequestMapping(value = "/token", method = RequestMethod.POST)
     public CommonResult<Oauth2TokenDto> postAccessToken(@ApiIgnore Principal principal, @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+        //调用 oauth2 默认的获取token接口方法
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
+
         Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()
                 .token(oAuth2AccessToken.getValue())
                 .refreshToken(oAuth2AccessToken.getRefreshToken().getValue())
@@ -52,9 +59,9 @@ public class AuthController {
         return CommonResult.success(oauth2TokenDto);
     }
 
-    @GetMapping("test")
-    public String test(){
-        return "cehgng";
+    @GetMapping("loadUser")
+    public CommonResult loadUser(String username){
+        return CommonResult.success(umsAdminService.loadUserByUsername(username));
     }
 }
 
