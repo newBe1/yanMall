@@ -59,9 +59,5 @@ public class AuthController {
         return CommonResult.success(oauth2TokenDto);
     }
 
-    @GetMapping("loadUser")
-    public CommonResult loadUser(String username){
-        return CommonResult.success(umsAdminService.loadUserByUsername(username));
-    }
 }
 

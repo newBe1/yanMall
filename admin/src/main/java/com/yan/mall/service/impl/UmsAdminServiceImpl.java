@@ -81,6 +81,11 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         return authService.getPubKey();
     }
 
+    @Override
+    public UmsAdmin getUserById(Long id) {
+        return umsAdminMapper.selectByPrimaryKey(id);
+    }
+
     public UmsAdmin getAdminByUsername(String username) {
         UmsAdminExample example = new UmsAdminExample();
         example.createCriteria().andUsernameEqualTo(username);

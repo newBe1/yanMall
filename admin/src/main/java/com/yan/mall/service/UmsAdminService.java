@@ -2,6 +2,7 @@ package com.yan.mall.service;
 
 import com.yan.mall.common.api.CommonResult;
 import com.yan.mall.common.domain.UserDto;
+import com.yan.mall.model.UmsAdmin;
 
 import java.util.Map;
 
@@ -25,4 +26,6 @@ public interface UmsAdminService {
     CommonResult login(String username, String password);
 
     Map<String, Object> getPubKey();
+
+    UmsAdmin getUserById(Long id);
 }

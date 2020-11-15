@@ -33,13 +33,11 @@ import java.util.Map;
  * Date: 2020-11-11
  * Time: 15:53
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = MallAuthApplication.class)
+
 public class CreatJwtTest {
 
     @Resource
     private UmsAdminService umsAdminService;
-
 
     /**
      * 通过密钥创建token
@@ -79,14 +77,14 @@ public class CreatJwtTest {
         tokenMap.put("name", "Ryan");
         tokenMap.put("roles", "ROLE_VIP,ROLE_USER");
 
-        //RSA非对称加密 用此私钥作为盐对token进行加密 生成token
+        //RSA非对称加密 用此私钥作为盐对自定义载荷进行加密 生成token
         Jwt jwt = JwtHelper.encode(JSON.toJSONString(tokenMap), new RsaSigner(rsaPrivateKey));
 
         //取出token
-        //System.out.println(jwt.getEncoded());
+        System.out.println(jwt.getEncoded());
 
         //获取公钥
-        System.out.println(Base64.getEncoder().encodeToString(rsaPublicKey.getEncoded()));
+        //System.out.println(Base64.getEncoder().encodeToString(rsaPublicKey.getEncoded()));
     }
 
     /**
@@ -98,7 +96,7 @@ public class CreatJwtTest {
         String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6IlJPTEVfVklQLFJPTEVfVVNFUiIsIm5hbWUiOiJSeWFuIiwiaWQiOiIxIn0.GG8z6iKQW6u8Iwv1rj-SoLT4uF_o2Cy-7si5KJ0uUGuOYFiqICg9SypZwdmgcKNjWHXFBbcVCMzgqZyxTbDM9BYLdTt0JYW-INtkjZAk-XV7P-zOLylHIG3U5rch_H4A_cKPh3ETQ9gqhcdTbrlCZXy88YdjcvgCW-aGbGcoWcg";
 
         //公钥 要带上前缀、后缀
-        String publickey = "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCmsE4DrtLBLU9oMe8ZK5CoZEF/M5NplS3Il1py+Ex0wT80lTNhcDQO0xwKTzg8dnUT9DpVCMbjOCKbe8EBoZwocM7ZzpyaHfDzetynZ6q8ITO7Ny8gmKIwyI5bB0N0huJs+khO/VlARDJYRXfwxli/FCl0FKSCtkV879lr8Kzg6QIDAQAB-----END PUBLIC KEY-----";
+        String publickey = "prBOA67SwS1PaDHvGSuQqGRBfzOTaZUtyJdacvhMdME_NJUzYXA0DtMcCk84PHZ1E_Q6VQjG4zgim3vBAaGcKHDO2c6cmh3w83rcp2eqvCEzuzcvIJiiMMiOWwdDdIbibPpITv1ZQEQyWEV38MZYvxQpdBSkgrZFfO_Za_Cs4Ok";
 
         //验证token
         Jwt jwt = JwtHelper.decodeAndVerify(token, new RsaVerifier(publickey));

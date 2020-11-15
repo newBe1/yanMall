@@ -1,16 +1,29 @@
 package com.yan.mall.controller;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.nimbusds.jose.JWSObject;
 import com.yan.mall.common.api.CommonResult;
+import com.yan.mall.common.api.IErrorCode;
+import com.yan.mall.common.api.ResultCode;
+import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.common.domain.UserDto;
+import com.yan.mall.common.exception.Asserts;
 import com.yan.mall.dto.UmsAdminLoginParam;
+import com.yan.mall.model.UmsAdmin;
 import com.yan.mall.service.UmsAdminService;
 import com.yan.mall.service.UmsRoleService;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.util.Map;
 
 /**
@@ -29,6 +42,9 @@ public class UmsAdminController {
 
     @Resource
     private UmsAdminService umsAdminService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @ApiOperation("登陆返回token")
     @RequestMapping(value = "login",method = RequestMethod.GET)
@@ -49,9 +65,31 @@ public class UmsAdminController {
         return umsAdminService.getPubKey();
     }
 
-    @GetMapping("test")
-    public String test(){
-        return "cehgng";
+
+    @ApiOperation("获取当前登录用户信息")
+    @RequestMapping(value = "getCurrentUser",method = RequestMethod.GET)
+    public CommonResult getCurrentUser(){
+
+        String token = request.getHeader(AuthConstant.JWT_TOKEN_HEADER);
+        if(StrUtil.isEmpty(token)){
+            Asserts.fail(ResultCode.UNAUTHORIZED);
+        }
+
+        try {
+            JWSObject jwsObject = JWSObject.parse(token);
+            String userStr = jwsObject.getPayload().toString();
+
+            UserDto userDto = JSONUtil.toBean(userStr,UserDto.class);
+            UmsAdmin umsAdmin = umsAdminService.getUserById(userDto.getId());
+            if(umsAdmin != null){
+                return CommonResult.success(umsAdmin);
+            }else {
+                return CommonResult.failed(ResultCode.NON_EXISTENT);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
