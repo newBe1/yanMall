@@ -44,7 +44,6 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenEnhancer jwtTokenEnhancer;
 
-
     /**
      * 配置两个客户端 admin-app、portal-app
      * @param clients
@@ -58,20 +57,22 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .scopes("all")                                          //客户端范围
                 .authorizedGrantTypes(                                  //该client允许的授权类型
                         "password" ,                                    //密码认证方式
-                        "refresh_token")                                //刷新令牌
+                        "refresh_token",                                //刷新令牌
+                        "authorization_code")                           //授权码模式
                 .accessTokenValiditySeconds(3600*24)                    //访问令牌有效期
                 .refreshTokenValiditySeconds(3600*24*7)                 //刷新令牌有效期
-                .and()
+                .redirectUris("http://localhost");                      //配置redirect_uri，用于授权成功后跳转
+                /*.and()
                 .withClient("portal-app")
                 .secret(passwordEncoder.encode("123456"))
                 .scopes("all")
                 .authorizedGrantTypes("password" , "refresh_token")
                 .accessTokenValiditySeconds(3600*24)
-                .refreshTokenValiditySeconds(3600*24*7);
+                .refreshTokenValiditySeconds(3600*24*7);*/
     }
 
     /**
-     * 用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)
+     * 用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)  使用密码模式登陆需要
      * @param endpointsConfiguration
      * @throws Exception
      */
@@ -86,6 +87,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .userDetailsService(userDetailsService)           //配置加载用户信息
                 .accessTokenConverter(accessTokenConverter())
                 .tokenEnhancer(enhancerChain);
+
     }
 
     @Override
@@ -113,9 +115,4 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
         return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
     }
-
-
-
-
-
 }

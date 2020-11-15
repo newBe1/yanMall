@@ -1,6 +1,9 @@
 package com.yan.mall.service;
 
+import com.yan.mall.common.api.CommonResult;
 import com.yan.mall.common.domain.UserDto;
+
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,4 +15,14 @@ import com.yan.mall.common.domain.UserDto;
 public interface UmsAdminService {
 
     UserDto loadUserByUsername(String username);
+
+    /**
+     * 登陆功能
+     * @param username 账号
+     * @param password 密码
+     * @return 调用认证中心获取token接口（密码模式认证）返回token
+     */
+    CommonResult login(String username, String password);
+
+    Map<String, Object> getPubKey();
 }

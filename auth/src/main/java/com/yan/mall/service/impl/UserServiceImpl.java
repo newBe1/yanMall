@@ -44,11 +44,12 @@ public class UserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String clientId = request.getParameter("client_id");
         UserDto userDto;
-        if(AuthConstant.ADMIN_CLIENT_ID.equals(clientId)){                   //后台管理用户登陆
+        /*if(AuthConstant.ADMIN_CLIENT_ID.equals(clientId)){                   //后台管理用户登陆
             userDto = adminService.loadUserByUsername(username);
         }else {
             userDto = memberService.loadUserByUsername(username);            //app客户端登陆
-        }
+        }*/
+        userDto = adminService.loadUserByUsername(username);
         if(userDto == null){
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
