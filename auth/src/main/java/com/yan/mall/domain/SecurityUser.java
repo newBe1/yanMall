@@ -13,6 +13,15 @@ import java.util.Collection;
  * User: Ryan
  * Date: 2020-11-06
  * Time: 14:47
+ *
+ * UserDetails接口说明：
+ *   用户的权限集， 默认需要添加ROLE_ 前缀
+ *   用户的加密后的密码， 不加密会使用{noop}前缀
+ *   应用内唯一的用户名
+ *   账户是否过期
+ *   账户是否锁定
+ *   凭证是否过期
+ *   用户是否可用
  */
 @Data
 public class SecurityUser implements UserDetails{

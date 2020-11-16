@@ -2,10 +2,12 @@ package com.yan.mall.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.BCrypt;
 import com.yan.mall.common.api.CommonResult;
 import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.common.domain.UserDto;
 import com.yan.mall.common.exception.Asserts;
+import com.yan.mall.dto.UmsAdminParam;
 import com.yan.mall.mapper.UmsAdminMapper;
 import com.yan.mall.dao.UmsAdminRoleRelationDao;
 import com.yan.mall.model.UmsAdmin;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,5 +101,25 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     public List<UmsRole> getRoleList(Long adminId) {
         return adminRoleRelationDao.getRoleList(adminId);
+    }
+
+    @Override
+    public UmsAdmin addUser(UmsAdminParam umsAdminParam) {
+        UmsAdmin umsAdmin = new UmsAdmin();
+        BeanUtils.copyProperties(umsAdminParam,umsAdmin);
+        umsAdmin.setCreateTime(new Date());
+        umsAdmin.setStatus(1);
+
+        //判断用户名是否重复
+        UmsAdmin model = this.getAdminByUsername(umsAdmin.getUsername());
+        if(model != null){
+            return null;
+        }
+
+        //加密密码
+        String encodePassword = BCrypt.hashpw(umsAdmin.getPassword());
+        umsAdmin.setPassword(encodePassword);
+        umsAdminMapper.insert(umsAdmin);
+        return umsAdmin;
     }
 }

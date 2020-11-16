@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:通过用户名获取用户封装为UserDto并将其加载入security
+ * Description:通过用户名获取用户UserDto对象 并封装SecurityUser将其加载入security（SecurityUser 实现 UserDetails）
  * User: Ryan
  * Date: 2020-11-06
  * Time: 15:31

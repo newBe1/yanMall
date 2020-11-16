@@ -60,15 +60,15 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                         "refresh_token",                                //刷新令牌
                         "authorization_code")                           //授权码模式
                 .accessTokenValiditySeconds(3600*24)                    //访问令牌有效期
-                .refreshTokenValiditySeconds(3600*24*7)                 //刷新令牌有效期
-                .redirectUris("http://localhost");                      //配置redirect_uri，用于授权成功后跳转
-                /*.and()
+                .refreshTokenValiditySeconds(3600*24*7)                //刷新令牌有效期
+                //.redirectUris("http://localhost");                    //配置redirect_uri，用于授权成功后跳转
+                .and()
                 .withClient("portal-app")
                 .secret(passwordEncoder.encode("123456"))
                 .scopes("all")
                 .authorizedGrantTypes("password" , "refresh_token")
                 .accessTokenValiditySeconds(3600*24)
-                .refreshTokenValiditySeconds(3600*24*7);*/
+                .refreshTokenValiditySeconds(3600*24*7);
     }
 
     /**

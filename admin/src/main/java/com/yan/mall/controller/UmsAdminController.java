@@ -10,6 +10,7 @@ import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.common.domain.UserDto;
 import com.yan.mall.common.exception.Asserts;
 import com.yan.mall.dto.UmsAdminLoginParam;
+import com.yan.mall.dto.UmsAdminParam;
 import com.yan.mall.model.UmsAdmin;
 import com.yan.mall.service.UmsAdminService;
 import com.yan.mall.service.UmsRoleService;
@@ -45,6 +46,12 @@ public class UmsAdminController {
 
     @Autowired
     private HttpServletRequest request;
+
+    @ApiOperation("注册用户")
+    public CommonResult register(@RequestBody UmsAdminParam umsAdminParam){
+        UmsAdmin umsAdmin = umsAdminService.addUser(umsAdminParam);
+        return CommonResult.success(umsAdmin);
+    }
 
     @ApiOperation("登陆返回token")
     @RequestMapping(value = "login",method = RequestMethod.GET)

@@ -37,13 +37,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception{
 
         //permitAll 无条件访问
-        /*httpSecurity.authorizeRequests()
+        httpSecurity.authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .antMatchers("/rsa/publicKey").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
-                .anyRequest().authenticated();*/
+                .anyRequest().authenticated();
 
-        httpSecurity.csrf()
+        /*httpSecurity.csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/rsa/publicKey/**", "/oauth/**")
@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .permitAll();
+                .permitAll();*/
     }
 
     /***

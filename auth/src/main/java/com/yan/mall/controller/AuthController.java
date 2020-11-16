@@ -47,7 +47,7 @@ public class AuthController {
     })
     @RequestMapping(value = "/token", method = RequestMethod.POST)
     public CommonResult<Oauth2TokenDto> postAccessToken(@ApiIgnore Principal principal, @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
-        //调用 oauth2 默认的获取token接口方法
+        //调用 oauth2 默认的获取token接口方法  （加密用户输入的密码）
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
 
         Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()

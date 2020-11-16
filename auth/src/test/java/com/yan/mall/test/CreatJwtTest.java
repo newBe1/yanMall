@@ -93,7 +93,7 @@ public class CreatJwtTest {
     @Test
     public void parseJwtTest(){
         //加密后的token
-        String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6IlJPTEVfVklQLFJPTEVfVVNFUiIsIm5hbWUiOiJSeWFuIiwiaWQiOiIxIn0.GG8z6iKQW6u8Iwv1rj-SoLT4uF_o2Cy-7si5KJ0uUGuOYFiqICg9SypZwdmgcKNjWHXFBbcVCMzgqZyxTbDM9BYLdTt0JYW-INtkjZAk-XV7P-zOLylHIG3U5rch_H4A_cKPh3ETQ9gqhcdTbrlCZXy88YdjcvgCW-aGbGcoWcg";
+        String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ0ZXN0Iiwic2NvcGUiOlsiYWxsIl0sImlkIjoxLCJleHAiOjE2MDU1ODA4NDEsImF1dGhvcml0aWVzIjpbIjVf6LaF57qn566h55CG5ZGYIl0sImp0aSI6ImYzN2NkNTY3LTk5MjAtNDljMy1iMTRkLTA3NDhjMzYyODFmZiIsImNsaWVudF9pZCI6ImFkbWluLWFwcCJ9.B82awbpg_j2C-0Fas4abTTZt6sB4VclQK4To5gHqolE8V40GZmst6Z3k6Kvzq7yPwgBTaUiv2zDOdbIUZGg10EGv0NmlHs_4tOi84kzqgKKfWlxagWgP4rasuqC6BkBgpjZ8JHsE0vQvAuGoxGmki_zB_GZMyk6jiYaqK3p8UuE";
 
         //公钥 要带上前缀、后缀
         String publickey = "prBOA67SwS1PaDHvGSuQqGRBfzOTaZUtyJdacvhMdME_NJUzYXA0DtMcCk84PHZ1E_Q6VQjG4zgim3vBAaGcKHDO2c6cmh3w83rcp2eqvCEzuzcvIJiiMMiOWwdDdIbibPpITv1ZQEQyWEV38MZYvxQpdBSkgrZFfO_Za_Cs4Ok";
