@@ -22,10 +22,13 @@ import javax.annotation.Resource;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
  * Description:鉴权管理器  用于判断是否有资源的访问权限
+ *  AuthenticationManager 负责校验
+ *  Authentication(身份验证) 对象在 AuthenticationManager 的 authenticate 函数中，开发人员实现对 Authentication 的校验逻辑。
  * User: Ryan
  * Date: 2020-11-16
  * Time: 16:23
@@ -41,7 +44,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();  //获取当前请求
         PathMatcher pathMatcher = new AntPathMatcher();
-        URI uri = request.getURI();
+        URI uri = request.getURI();     //当前请求地址
 
         //白名单直接放行
         List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
@@ -56,22 +59,37 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
             return Mono.just(new AuthorizationDecision(true));
         }
 
-        //不同用户体系登陆不允许相互访问
-        String token = request.getHeaders().getFirst("AuthConstant.JWT_TOKEN_HEADER");
+        //不同用户体系登陆不允许相互访问  取出token中的客户端id 和 请求路径的前缀进行比较
+        String token = request.getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
 
         if (StrUtil.isEmpty(token)) {
             return Mono.just(new AuthorizationDecision(false));
         }
         try {
-            String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
-            JWSObject jwsObject = JWSObject.parse(realToken);
+            //String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
+            //JWSObject jwsObject = JWSObject.parse(realToken);
+            JWSObject jwsObject = JWSObject.parse(token);
             String userStr = jwsObject.getPayload().toString();
             UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
-
+            if (AuthConstant.ADMIN_CLIENT_ID.equals(userDto.getClientId()) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
+                return Mono.just(new AuthorizationDecision(false));
+            }
+            if (AuthConstant.PORTAL_CLIENT_ID.equals(userDto.getClientId()) && pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
+                return Mono.just(new AuthorizationDecision(false));
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();
+            return Mono.just(new AuthorizationDecision(false));
         }
+
+        //非管理端的路径直接放行  请求接口前缀不是mall-admin
+        if(!pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN , uri.getPath())){
+            return Mono.just(new AuthorizationDecision(true));
+        }
+
+        //管理端路径需要检验
+        Map<Object, Object> resourcesRolesMap = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
 
         return null;
     }

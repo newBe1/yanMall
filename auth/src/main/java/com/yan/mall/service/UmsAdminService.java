@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Date: 2020-11-06
  * Time: 15:31
  */
-@FeignClient("admin")
+@FeignClient("mall-admin")
 public interface UmsAdminService {
     @GetMapping("/admin/loadByUsername")
     UserDto loadUserByUsername(@RequestParam String username);

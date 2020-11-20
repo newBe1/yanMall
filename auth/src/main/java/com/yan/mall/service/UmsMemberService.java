@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Date: 2020-11-06
  * Time: 15:32
  */
-@FeignClient("portal")
+@FeignClient("mall-portal")
 public interface UmsMemberService {
 
     @GetMapping("/portal/loadByUsername")

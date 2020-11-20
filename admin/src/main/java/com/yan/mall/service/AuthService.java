@@ -16,7 +16,7 @@ import java.util.Map;
  * Date: 2020-11-11
  * Time: 15:39
  */
-@FeignClient("auth")
+@FeignClient("mall-auth")
 public interface AuthService {
 
     @PostMapping(value = "oauth/token")

@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,6 +112,13 @@ public class CreatJwtTest {
         String username = "test";
         UserDto userDto = umsAdminService.loadUserByUsername(username);
         System.out.println(userDto.getPassword());
+    }
+
+    @Test
+    public void fasdfasd(){
+        float fa = (float) 0;
+        DecimalFormat df = new DecimalFormat("0.00%");
+        System.out.println(df.format(fa));
     }
 
 }
