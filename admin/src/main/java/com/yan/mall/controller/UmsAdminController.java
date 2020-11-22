@@ -1,5 +1,6 @@
 package com.yan.mall.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.nimbusds.jose.JWSObject;
@@ -12,6 +13,7 @@ import com.yan.mall.common.exception.Asserts;
 import com.yan.mall.dto.UmsAdminLoginParam;
 import com.yan.mall.dto.UmsAdminParam;
 import com.yan.mall.model.UmsAdmin;
+import com.yan.mall.model.UmsRole;
 import com.yan.mall.service.UmsAdminService;
 import com.yan.mall.service.UmsRoleService;
 import io.jsonwebtoken.Jwts;
@@ -22,10 +24,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,12 +46,8 @@ import java.util.Map;
 public class UmsAdminController {
     @Resource
     private UmsRoleService umsRoleService;
-
     @Resource
     private UmsAdminService umsAdminService;
-
-    @Autowired
-    private HttpServletRequest request;
 
     @ApiOperation("注册用户")
     public CommonResult register(@RequestBody UmsAdminParam umsAdminParam){
@@ -76,27 +78,17 @@ public class UmsAdminController {
     @ApiOperation("获取当前登录用户信息")
     @RequestMapping(value = "getCurrentUser",method = RequestMethod.GET)
     public CommonResult getCurrentUser(){
+        UmsAdmin umsAdmin = umsAdminService.getCurrentAdmin();
 
-        String token = request.getHeader(AuthConstant.JWT_TOKEN_HEADER);
-        if(StrUtil.isEmpty(token)){
-            Asserts.fail(ResultCode.UNAUTHORIZED);
+        Map<String,Object> map = new HashMap<>();
+        map.put("username",umsAdmin.getUsername());
+        map.put("menus",umsRoleService.getMenuList(umsAdmin.getId()));
+        map.put("icon",umsAdmin.getIcon());
+        List<UmsRole> roleList = umsAdminService.getRoleList(umsAdmin.getId());
+        if(CollUtil.isNotEmpty(roleList)){
+            List<String> roleStrList = roleList.stream().map(UmsRole::getName).collect(Collectors.toList());
+            map.put("role",roleStrList);
         }
-
-        try {
-            JWSObject jwsObject = JWSObject.parse(token);
-            String userStr = jwsObject.getPayload().toString();
-
-            UserDto userDto = JSONUtil.toBean(userStr,UserDto.class);
-            UmsAdmin umsAdmin = umsAdminService.getUserById(userDto.getId());
-            if(umsAdmin != null){
-                return CommonResult.success(umsAdmin);
-            }else {
-                return CommonResult.failed(ResultCode.NON_EXISTENT);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return CommonResult.success(map);
     }
-
 }

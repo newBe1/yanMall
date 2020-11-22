@@ -1,7 +1,12 @@
 package com.yan.mall.service.impl;
 
+import com.yan.mall.dao.UmsRoleDao;
+import com.yan.mall.model.UmsMenu;
 import com.yan.mall.service.UmsRoleService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,4 +17,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UmsRoleServiceImpl implements UmsRoleService {
+    @Resource
+    private UmsRoleDao roleDao;
+
+    @Override
+    public List<UmsMenu> getMenuList(Long adminId) {
+        return roleDao.getMenuList(adminId);
+    }
 }

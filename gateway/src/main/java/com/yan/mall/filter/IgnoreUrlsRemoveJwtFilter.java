@@ -2,7 +2,6 @@ package com.yan.mall.filter;
 
 import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.config.IgnoreUrlsConfig;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -23,15 +22,15 @@ import java.util.List;
  * Date: 2020-11-19
  * Time: 16:06
  */
+
 @Component
-@Order(1)
-public class IgnoreUrlsRemoveJwtFilter implements WebFilter {
+public class IgnoreUrlsRemoveJwtFilter implements WebFilter{
     @Resource
     private IgnoreUrlsConfig ignoreUrlsConfig;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-
+        String token = exchange.getRequest().getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
         ServerHttpRequest request = exchange.getRequest();
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
@@ -47,4 +46,5 @@ public class IgnoreUrlsRemoveJwtFilter implements WebFilter {
         }
         return chain.filter(exchange);
     }
+
 }

@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:认证服务器配置
+ * Description:认证服务器配置  （客户端信息、令牌生产规则）
  * User: Ryan
  * Date: 2020-11-06
  * Time: 15:26

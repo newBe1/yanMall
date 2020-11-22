@@ -1,6 +1,5 @@
 package com.yan.mall.config;
 
-import com.yan.mall.service.impl.UserServiceImpl;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:
+ * Description: 设置资源控制
  * User: Ryan
  * Date: 2020-11-06
  * Time: 14:55
@@ -74,4 +73,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+    //配置security登录账号密码
+    /*@Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("yan").roles("admin").password("123456");
+    }*/
 }

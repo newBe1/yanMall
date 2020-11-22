@@ -3,7 +3,9 @@ package com.yan.mall.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.BCrypt;
+import cn.hutool.json.JSONUtil;
 import com.yan.mall.common.api.CommonResult;
+import com.yan.mall.common.api.ResultCode;
 import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.common.domain.UserDto;
 import com.yan.mall.common.exception.Asserts;
@@ -14,6 +16,7 @@ import com.yan.mall.model.UmsAdmin;
 import com.yan.mall.model.UmsAdminExample;
 import com.yan.mall.model.UmsRole;
 import com.yan.mall.service.AuthService;
+import com.yan.mall.service.UmsAdminCacheService;
 import com.yan.mall.service.UmsAdminService;
 import org.springframework.beans.BeanUtils;
 import org.slf4j.Logger;
@@ -22,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +51,12 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Resource
     private AuthService authService;
+
+    @Autowired
+    private UmsAdminCacheService adminCacheService;
+
+    @Autowired
+    private HttpServletRequest request;
 
 
     @Override
@@ -121,5 +131,22 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         umsAdmin.setPassword(encodePassword);
         umsAdminMapper.insert(umsAdmin);
         return umsAdmin;
+    }
+
+    @Override
+    public UmsAdmin getCurrentAdmin() {
+        String userStr = request.getHeader(AuthConstant.USER_TOKEN_HEADER);
+        if (StrUtil.isEmpty(userStr)){
+            Asserts.fail(ResultCode.UNAUTHORIZED);
+        }
+        UserDto userDto = JSONUtil.toBean(userStr,UserDto.class);
+        UmsAdmin umsAdmin = adminCacheService.getAdmin(userDto.getId());
+        if(umsAdmin!=null){
+            return umsAdmin;
+        }else {
+            umsAdmin = umsAdminMapper.selectByPrimaryKey(userDto.getId());
+            adminCacheService.setAdmin(umsAdmin);
+            return umsAdmin;
+        }
     }
 }

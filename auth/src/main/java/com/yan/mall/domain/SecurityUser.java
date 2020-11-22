@@ -9,13 +9,13 @@ import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:登录用户信息
+ * Description:登录用户信息 存入security 中的用户对象
  * User: Ryan
  * Date: 2020-11-06
  * Time: 14:47
  *
  * UserDetails接口说明：
- *   用户的权限集， 默认需要添加ROLE_ 前缀
+ *   用户的权限集， 默认需要添加   ROLE_   前缀  security会自动截取 ROLE_ 后的字符串作为实际权限字符串
  *   用户的加密后的密码， 不加密会使用{noop}前缀
  *   应用内唯一的用户名
  *   账户是否过期

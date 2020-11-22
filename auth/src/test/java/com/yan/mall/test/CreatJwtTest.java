@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.yan.mall.MallAuthApplication;
+import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.common.domain.UserDto;
+import com.yan.mall.common.service.RedisService;
 import com.yan.mall.service.UmsAdminService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +27,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +42,9 @@ public class CreatJwtTest {
 
     @Resource
     private UmsAdminService umsAdminService;
+
+    @Resource
+    private RedisService redisService;
 
     /**
      * 通过密钥创建token
@@ -119,6 +125,14 @@ public class CreatJwtTest {
         float fa = (float) 0;
         DecimalFormat df = new DecimalFormat("0.00%");
         System.out.println(df.format(fa));
+    }
+
+    @Test
+    public void getResurces(){
+        List<String> resources = (List<String>)redisService.get(AuthConstant.RESOURCE_ROLES_MAP_KEY);
+        for (String resource : resources) {
+            System.out.printf(resource);
+        }
     }
 
 }

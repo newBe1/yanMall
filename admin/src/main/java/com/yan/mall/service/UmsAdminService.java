@@ -4,7 +4,9 @@ import com.yan.mall.common.api.CommonResult;
 import com.yan.mall.common.domain.UserDto;
 import com.yan.mall.dto.UmsAdminParam;
 import com.yan.mall.model.UmsAdmin;
+import com.yan.mall.model.UmsRole;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +33,8 @@ public interface UmsAdminService {
     UmsAdmin getUserById(Long id);
 
     UmsAdmin addUser(UmsAdminParam umsAdminParam);
+
+    UmsAdmin getCurrentAdmin();
+
+    List<UmsRole> getRoleList(Long id);
 }

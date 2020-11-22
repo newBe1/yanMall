@@ -9,6 +9,6 @@ spring:
   redis:
     database: 0
     port: 6379
-    #host: 129.28.169.156
-    host: 127.0.0.1
+    host: 129.28.169.156
+    #host: 127.0.0.1
     password:
