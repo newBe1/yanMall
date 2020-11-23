@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
  * Time: 15:53
  */
 @Component
-public class RestAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
+public class RestAuthenticationEntryPoint implements ServerAuthenticationEntryPoint{
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException e) {
         ServerHttpResponse response = exchange.getResponse();

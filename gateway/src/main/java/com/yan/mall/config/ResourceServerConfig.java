@@ -21,17 +21,13 @@ import org.springframework.security.oauth2.server.resource.authentication.Reacti
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
 
-
 /**
- * Created with IntelliJ IDEA.
- * Description:资源服务器配置
- * User: Ryan
- * Date: 2020-11-19
- * Time: 15:00
+ * 资源服务器配置
+ * Created by macro on 2020/6/19.
  */
 @AllArgsConstructor
 @Configuration
-@EnableWebFluxSecurity    //开启WebFlux  非阻塞异步的框架
+@EnableWebFluxSecurity
 public class ResourceServerConfig {
     private final AuthorizationManager authorizationManager;
     private final IgnoreUrlsConfig ignoreUrlsConfig;
@@ -40,21 +36,19 @@ public class ResourceServerConfig {
     private final IgnoreUrlsRemoveJwtFilter ignoreUrlsRemoveJwtFilter;
 
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http){
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.oauth2ResourceServer().jwt()
                 .jwtAuthenticationConverter(jwtAuthenticationConverter());
-        //自定义处理请求头过期或签名错误返回结果
+        //自定义处理JWT请求头过期或签名错误的结果
         http.oauth2ResourceServer().authenticationEntryPoint(restAuthenticationEntryPoint);
-
-        //添加对白名单路径直接移除jwt请求头组件 在请求前生效
-        http.addFilterBefore(ignoreUrlsRemoveJwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
-
+        //对白名单路径，直接移除JWT请求头
+        http.addFilterBefore(ignoreUrlsRemoveJwtFilter,SecurityWebFiltersOrder.AUTHENTICATION);
         http.authorizeExchange()
-                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(),String.class)).permitAll()           //白名单配置
-                .anyExchange().access(authorizationManager)  //鉴权管理器
+                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(),String.class)).permitAll()//白名单配置
+                .anyExchange().access(authorizationManager)//鉴权管理器配置
                 .and().exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler)        //未授权处理
-                .authenticationEntryPoint(restAuthenticationEntryPoint) //未认证处理
+                .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权
+                .authenticationEntryPoint(restAuthenticationEntryPoint)//处理未认证
                 .and().csrf().disable();
         return http.build();
     }
@@ -68,4 +62,5 @@ public class ResourceServerConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
     }
+
 }

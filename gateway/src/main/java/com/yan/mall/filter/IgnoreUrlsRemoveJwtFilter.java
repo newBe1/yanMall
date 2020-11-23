@@ -2,6 +2,9 @@ package com.yan.mall.filter;
 
 import com.yan.mall.common.constant.AuthConstant;
 import com.yan.mall.config.IgnoreUrlsConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -11,34 +14,28 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.Resource;
 import java.net.URI;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:白名单路径访问时 移除jwt 请求头
- * User: Ryan
- * Date: 2020-11-19
- * Time: 16:06
+ * 白名单路径访问时需要移除JWT请求头
+ * Created by macro on 2020/7/24.
  */
-
 @Component
-public class IgnoreUrlsRemoveJwtFilter implements WebFilter{
-    @Resource
+public class IgnoreUrlsRemoveJwtFilter implements WebFilter {
+    private static Logger LOGGER = LoggerFactory.getLogger(IgnoreUrlsRemoveJwtFilter.class);
+    @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
-
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        String token = exchange.getRequest().getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
+        LOGGER.info("---------------移除白名单请求头过滤器-------------------");
         ServerHttpRequest request = exchange.getRequest();
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
-
-        //移除白名单的jwt请求头
+        //白名单路径移除JWT请求头
         List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
         for (String ignoreUrl : ignoreUrls) {
-            if (pathMatcher.match(ignoreUrl,uri.getPath())){   //判断请求路径是否和白名单匹配
+            if (pathMatcher.match(ignoreUrl, uri.getPath())) {
                 request = exchange.getRequest().mutate().header(AuthConstant.JWT_TOKEN_HEADER, "").build();
                 exchange = exchange.mutate().request(request).build();
                 return chain.filter(exchange);
@@ -46,5 +43,4 @@ public class IgnoreUrlsRemoveJwtFilter implements WebFilter{
         }
         return chain.filter(exchange);
     }
-
 }

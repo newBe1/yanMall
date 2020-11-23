@@ -1,5 +1,6 @@
 package com.yan.mall.dto;
 
+import com.yan.mall.validator.FlagValidator;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

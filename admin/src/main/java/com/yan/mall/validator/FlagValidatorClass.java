@@ -23,7 +23,7 @@ public class FlagValidatorClass implements ConstraintValidator<FlagValidator,Int
     public boolean isValid(Integer value, ConstraintValidatorContext constraintValidatorContext) {
         boolean isValid = false;
         if (value == null){
-            return true;
+            isValid = false;
         }
 
         for (int i = 0; i < values.length; i++) {

@@ -4,7 +4,7 @@ import com.yan.mall.common.api.IErrorCode;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:
+ * Description:自定义异常处理
  * User: Ryan
  * Date: 2020-11-04
  * Time: 14:12

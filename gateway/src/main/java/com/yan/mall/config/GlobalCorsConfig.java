@@ -17,15 +17,14 @@ import org.springframework.web.util.pattern.PathPatternParser;
 @Configuration
 public class GlobalCorsConfig {
     @Bean
-    public CorsWebFilter corsWebFilter(){
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true);
-
+    public CorsWebFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedMethod("*");
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**", config);
 
         return new CorsWebFilter(source);
     }

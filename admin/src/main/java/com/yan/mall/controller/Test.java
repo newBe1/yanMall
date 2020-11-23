@@ -2,15 +2,20 @@ package com.yan.mall.controller;
 
 import com.yan.mall.common.api.CommonResult;
 import com.yan.mall.common.constant.AuthConstant;
+import com.yan.mall.dao.TestParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,5 +42,13 @@ public class Test {
     public CommonResult getResourceRole(){
         Map<Object, Object> resourcesRolesMap = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
         return CommonResult.success(resourcesRolesMap);
+    }
+
+    @RequestMapping(value = "testParam",method=RequestMethod.POST)
+    public CommonResult testParam(@Validated @RequestBody TestParam test, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return CommonResult.validateFailed(bindingResult.getAllErrors().stream().map(item -> item.toString()).collect(Collectors.joining(",")));
+        }
+        return CommonResult.success(test);
     }
 }

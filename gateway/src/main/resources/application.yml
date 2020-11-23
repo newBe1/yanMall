@@ -5,7 +5,7 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: true #表明gateway开启服务注册和发现的功能，并且自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
           lower-case-service-id: true #使用小写service-id
       routes: #配置路由路径
         - id: mall-auth
