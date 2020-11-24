@@ -1,6 +1,7 @@
 package com.yan.mall.test;
 
 import com.alibaba.fastjson.JSON;
+import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.yan.mall.MallAuthApplication;
@@ -25,6 +26,7 @@ import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -129,9 +131,12 @@ public class CreatJwtTest {
 
     @Test
     public void getResurces(){
-        List<String> resources = (List<String>)redisService.get(AuthConstant.RESOURCE_ROLES_MAP_KEY);
-        for (String resource : resources) {
-            System.out.printf(resource);
+        try {
+            JWSObject jwsObject = JWSObject.parse("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ0ZXN0Iiwic2NvcGUiOlsiYWxsIl0sImlkIjoxLCJleHAiOjE2MDYyNzI1ODYsImF1dGhvcml0aWVzIjpbIjVf6LaF57qn566h55CG5ZGYIl0sImp0aSI6ImU5NzZiNDU4LTNhNzEtNDllZC1iYjhlLTY3N2Q3MGE4Y2UxNSIsImNsaWVudF9pZCI6ImFkbWluLWFwcCJ9.ka8VpEbiRwroRzuSHH_FHuMsl-6x3Zq8nfg6l9g8ZL11kyRPAfGDr54nBnyJRwEPg5XhIfgUS2Nm9SxT3XG8AJb_L0wk0WNSnV46HfDPfDhMzSKEuvjunkGbodCcVCy_RjyzdM0SvSFnDd2lHN0j1aa3oj2AQyUFql9YMsER854");
+            String userStr = jwsObject.getPayload().toString();
+            System.out.println(userStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

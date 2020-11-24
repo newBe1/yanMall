@@ -27,7 +27,7 @@ import reactor.core.publisher.Mono;
  */
 @AllArgsConstructor
 @Configuration
-@EnableWebFluxSecurity
+@EnableWebFluxSecurity    //开启webflux
 public class ResourceServerConfig {
     private final AuthorizationManager authorizationManager;
     private final IgnoreUrlsConfig ignoreUrlsConfig;
