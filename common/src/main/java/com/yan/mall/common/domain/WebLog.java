@@ -1,5 +1,6 @@
 package com.yan.mall.common.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Builder
 public class WebLog {
     /**
      * 操作描述
