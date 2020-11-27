@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
- * Description:登陆用户信息
+ * Description:登陆用户信息 存入token
  * User: Ryan
  * Date: 2020-11-06
  * Time: 15:33

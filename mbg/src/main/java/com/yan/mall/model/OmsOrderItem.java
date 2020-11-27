@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * 订单中的商品信息  一个订单对应多个商品
+ */
 public class OmsOrderItem implements Serializable {
     private Long id;
 
