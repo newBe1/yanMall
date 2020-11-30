@@ -62,7 +62,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 
     @Override
     public UmsMember getById(Long id) {
-        return null;
+        return memberMapper.selectByPrimaryKey(id);
     }
 
     @Override

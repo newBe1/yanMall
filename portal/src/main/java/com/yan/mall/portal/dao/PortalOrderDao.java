@@ -17,18 +17,28 @@ import java.util.List;
 @Mapper
 public interface PortalOrderDao {
     /**
-     * 查询超时、未支付订单
-     * @return
+     * 获取订单及下单商品详情
      */
-    List<OmsOrderDetail> getTimeOutOrders(@Param("minute")Integer minute);
+    OmsOrderDetail getDetail(@Param("orderId") Long orderId);
 
     /**
-     * 批量更新订单状态
-     * @param ids
-     * @param status
-     * @return
+     * 修改 pms_sku_stock表的锁定库存及真实库存
      */
-    int updateOrderStatus(@Param("ids") List<Long> ids, @Param("status") int status);
+    int updateSkuStock(@Param("itemList") List<OmsOrderItem> orderItemList);
 
-    int releaseSkuStockLock(@Param("orderItemList") List<OmsOrderItem> orderItemList);
+    /**
+     * 获取超时订单
+     * @param minute 超时时间（分）
+     */
+    List<OmsOrderDetail> getTimeOutOrders(@Param("minute") Integer minute);
+
+    /**
+     * 批量修改订单状态
+     */
+    int updateOrderStatus(@Param("ids") List<Long> ids,@Param("status") Integer status);
+
+    /**
+     * 解除取消订单的库存锁定
+     */
+    int releaseSkuStockLock(@Param("itemList") List<OmsOrderItem> orderItemList);
 }
