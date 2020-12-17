@@ -42,10 +42,9 @@ public class Test {
     }
 
     @RequestMapping(value = "testParam",method=RequestMethod.POST)
-    public CommonResult testParam(@Validated @RequestBody TestParam test, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return CommonResult.validateFailed(bindingResult.getAllErrors().stream().map(item -> item.toString()).collect(Collectors.joining(",")));
-        }
-        return CommonResult.success(test);
+    public CommonResult testParam(@Validated @RequestBody TestParam test){
+        CommonResult commonResult;
+        commonResult = CommonResult.success(test);
+        return commonResult;
     }
 }

@@ -37,7 +37,7 @@ import java.util.Map;
 public class WebLogAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLogAspect.class);
 
-    @Pointcut("execution(public * com.yan.mall.controller.*.*(..))||execution(public * com.yan.mall.*.controller.*.*(..))")
+    @Pointcut("execution(public * com.yan.mall.controller.*.*(..))")
     public void webLog(){}
 
     @Before("webLog()")
@@ -84,9 +84,8 @@ public class WebLogAspect {
         logMap.put("spendTime", webLog.getSpendTime());
         logMap.put("description", webLog.getDescription());
 
+
         //TODO 将日志信息存入Elasticsearch
-
-
         LOGGER.info(Markers.appendEntries(logMap), JSONUtil.parse(webLog).toString());
         return result;
     }

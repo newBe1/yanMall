@@ -45,10 +45,8 @@ public class UmsAdminController {
 
     @ApiOperation("登陆返回token")
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return CommonResult.validateFailed(bindingResult.getAllErrors().stream().map(item -> item.toString()).collect(Collectors.joining(",")));
-        }
+    public CommonResult login(@RequestBody UmsAdminLoginParam umsAdminLoginParam){
+
         return umsAdminService.login(umsAdminLoginParam.getUsername(),umsAdminLoginParam.getPassword());
     }
 

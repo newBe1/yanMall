@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * Time: 11:00
  */
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages ={"com.yan.mall.*"})
 @EnableFeignClients
 public class MallAdminApplication {
     public static void main(String[] args) {
