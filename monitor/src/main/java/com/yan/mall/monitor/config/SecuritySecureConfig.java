@@ -18,39 +18,35 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
     private final String adminContextPath;
 
-
     public SecuritySecureConfig(AdminServerProperties adminServerProperties) {
         this.adminContextPath = adminServerProperties.getContextPath();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");
-        successHandler.setDefaultTargetUrl(adminContextPath+"/");
+        successHandler.setDefaultTargetUrl(adminContextPath + "/");
 
         http.authorizeRequests()
-                //配置所有静态资源和登陆页可以公开访问
+                //1.配置所有静态资源和登录页可以公开访问
                 .antMatchers(adminContextPath + "/assets/**").permitAll()
-                .antMatchers(adminContextPath + "login").permitAll()
-                .antMatchers().authenticated()
+                .antMatchers(adminContextPath + "/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
-
-                //配置登陆、登出路径
+                //2.配置登录和登出路径
                 .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
                 .logout().logoutUrl(adminContextPath + "/logout").and()
-
-                //开启http basic 支持 ，admin-client注册时需要
+                //3.开启http basic支持，admin-client注册时需要使用
                 .httpBasic().and()
                 .csrf()
-
-                //开启cookie的csrf(跨域)保护
+                //4.开启基于cookie的csrf保护
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-
-                //忽略以下路径的csrf(跨域)保护 以便admin-client注册
+                //5.忽略这些路径的csrf保护以便admin-client注册
                 .ignoringAntMatchers(
-                        adminContextPath + "instances",
-                        adminContextPath + "actuator/**"
+                        adminContextPath + "/instances",
+                        adminContextPath + "/actuator/**"
                 );
     }
 }
+

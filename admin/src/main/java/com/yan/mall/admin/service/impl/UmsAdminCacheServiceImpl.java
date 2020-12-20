@@ -3,7 +3,6 @@ package com.yan.mall.admin.service.impl;
 import com.yan.mall.common.service.RedisService;
 import com.yan.mall.model.UmsAdmin;
 import com.yan.mall.admin.service.UmsAdminCacheService;
-import com.yan.mall.admin.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

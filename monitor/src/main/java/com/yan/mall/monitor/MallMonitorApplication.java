@@ -4,6 +4,7 @@ import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,8 +40,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 状态更改的事件日志（非持久性）
  */
 @EnableDiscoveryClient
-@SpringBootApplication
 @EnableAdminServer
+@SpringBootApplication(scanBasePackages ={"com.yan.mall.monitor.*"})
 public class MallMonitorApplication {
     public static void main(String[] args) {
         SpringApplication.run(MallMonitorApplication.class, args);

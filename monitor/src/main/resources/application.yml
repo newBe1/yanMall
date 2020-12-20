@@ -1,6 +1,6 @@
 spring:
   application:
-    name: monitor
+    name: mall-monitor
   security: # 配置登录用户名和密码  采用spring security提供安全保障 默认情况下admin会提供 登陆页面
     user:
       name: Ryan
