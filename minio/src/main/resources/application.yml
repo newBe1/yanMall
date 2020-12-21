@@ -26,5 +26,5 @@ spring:
 minio:
   endpoint: http://129.28.169.156:9090 #MinIO服务所在地址
   bucketName: yan-mall #存储桶名称
-  accessKey: minioadmin #访问的key
+  accesskey: minioadmin #访问的key
   secretKey: minioadmin #访问的秘钥

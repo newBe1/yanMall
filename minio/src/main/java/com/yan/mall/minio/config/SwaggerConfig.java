@@ -11,7 +11,7 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     @Override
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
-                .apiBasePackage("com.yan.mall.minIo.controller")
+                .apiBasePackage("com.yan.mall.minio.controller")
                 .title("MinIo存储对象系统")
                 .description("MinIo存储对象相关接口文档")
                 .contactName("Ryan")
