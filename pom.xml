@@ -15,7 +15,7 @@
         <module>gateway</module>
         <module>auth</module>
         <module>search</module>
-        <module>sys</module>
+        <module>minio</module>
         <module>monitor</module>
         <module>portal</module>
     </modules>
@@ -49,7 +49,7 @@
         <logstash-logback.version>5.3</logstash-logback.version>
         <admin-starter-server.version>2.2.3</admin-starter-server.version>
         <minio.version>7.1.0</minio.version>
-        <knife4j.version>2.0.4</knife4j.version>
+        <knife4j.version>1.9.6</knife4j.version>
         <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
         <common.version>1.0-SNAPSHOT</common.version>
         <mbg.version>1.0-SNAPSHOT</mbg.version>
