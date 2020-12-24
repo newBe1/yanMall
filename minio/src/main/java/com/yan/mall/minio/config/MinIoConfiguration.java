@@ -64,7 +64,7 @@ public class MinIoConfiguration {
                 .Action("s3:GetObject")
                 .Resource("arn:aws:s3:::"+bucketName+"/*.**").build();
         return BucketPolicyConfigDto.builder()
-                .Version("2020-12-17")
+                .Version("V1.0")
                 .Statement(CollUtil.toList(statement))
                 .build();
     }

@@ -97,7 +97,7 @@ public class MinIoController {
     public CommonResult getObjURL(String objName,Integer expires){
         try {
             String str = minIoService.getObjURL(objName, expires);
-            return CommonResult.success(objName + "文件的访问路径：" + str + "\\n" +" 有效期(S)：" + expires);
+            return CommonResult.success(objName + "文件的访问路径：" + str +" 有效期(S)：" + expires);
         }catch (Exception e){
             e.printStackTrace();
             return CommonResult.failed();
