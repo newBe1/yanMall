@@ -52,7 +52,7 @@ public class UmsAdminController {
 
     @ApiOperation("根据用户名获取用户详情信息")
     @RequestMapping(value = "loadByUsername",method = RequestMethod.GET)
-    public UserDto loadUserByUsername(@RequestParam String username){
+    public UserDto loadUserByUsername(@RequestParam(name = "username",value = "用户名",required = true) String username){
         UserDto userDto = umsAdminService.loadUserByUsername(username);
         return userDto;
     }
